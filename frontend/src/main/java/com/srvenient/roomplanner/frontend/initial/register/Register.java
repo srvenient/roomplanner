@@ -1,4 +1,4 @@
-package com.srvenient.universitywork.sign.up;
+package com.srvenient.roomplanner.frontend.initial.register;
 
 import javax.swing.*;
 

@@ -1,6 +1,6 @@
-package com.srvenient.universitywork;
+package com.srvenient.roomplanner.frontend;
 
-import com.srvenient.universitywork.sign.in.Login;
+import com.srvenient.roomplanner.frontend.initial.login.Login;
 
 import javax.swing.*;
 import java.awt.*;
