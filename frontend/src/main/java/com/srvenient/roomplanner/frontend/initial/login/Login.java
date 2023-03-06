@@ -1,31 +1,35 @@
-package com.srvenient.universitywork.sign.in;
+package com.srvenient.roomplanner.frontend.initial.login;
 
-import com.srvenient.universitywork.sign.up.Register;
+import com.srvenient.roomplanner.frontend.initial.register.Register;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Login extends JFrame {
 
+    private final String DEFAULT_USERNAME = "Username or gmail";
+    private final String DEFAULT_PASSWORD = "Enter your password";
+
     private final JPanel jPanel1;
     private final JPanel jPanel2;
     private final JLabel jLabel1;
     private final JLabel jLabel2;
     private final JLabel jLabel3;
-    private final JLabel jLabelUserIcon;
-    private final JLabel jLabelPadlock;
-    private final JTextField jTextFieldUsername;
-    private final JPasswordField jPasswordField;
+    private final JLabel lblUserIcon;
+    private final JLabel lblPadlock;
+    private final JTextField txtUsername;
+    private final JPasswordField txtPassword;
     private final JSeparator jSeparator1;
     private final JSeparator jSeparator2;
-    private final JButton jButtonSingIn;
-    private final JButton jButtonSingUp;
+    private final JButton btnLogin;
+    private final JButton btnRegister;
 
     public Login() {
         this.jPanel1 = new JPanel();
@@ -33,14 +37,14 @@ public class Login extends JFrame {
         this.jLabel1 = new JLabel();
         this.jLabel2 = new JLabel();
         this.jLabel3 = new JLabel();
-        this.jLabelUserIcon = new JLabel();
-        this.jLabelPadlock = new JLabel();
-        this.jTextFieldUsername = new JTextField();
-        this.jPasswordField = new JPasswordField();
+        this.lblUserIcon = new JLabel();
+        this.lblPadlock = new JLabel();
+        this.txtUsername = new JTextField();
+        this.txtPassword = new JPasswordField();
         this.jSeparator1 = new JSeparator();
         this.jSeparator2 = new JSeparator();
-        this.jButtonSingUp = new JButton();
-        this.jButtonSingIn = new JButton();
+        this.btnLogin = new JButton();
+        this.btnRegister = new JButton();
 
         createWindow();
     }
@@ -80,39 +84,51 @@ public class Login extends JFrame {
                 .addGap(0, 404, Short.MAX_VALUE)
         );
 
-        this.jLabelUserIcon.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/usuario (1).png")))); // NOI18N
-        this.jLabelPadlock.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/candado-abierto.png")))); // NOI18N
+        this.lblUserIcon.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/usuario.png")))); // NOI18N
+        this.lblPadlock.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/candado-abierto.png")))); // NOI18N
 
-        this.jTextFieldUsername.setBackground(new Color(255, 255, 255));
-        this.jTextFieldUsername.setForeground(new Color(0, 0, 0));
-        this.jTextFieldUsername.setText("Username");
-        this.jTextFieldUsername.setToolTipText("");
-        this.jTextFieldUsername.setBorder(null);
-        this.jTextFieldUsername.addActionListener(this::jTextField2ActionPerformed);
-        this.jTextFieldUsername.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent evt) {
-                jTextField2KeyTyped(evt);
+        this.txtUsername.setBackground(new Color(255, 255, 255));
+        this.txtUsername.setForeground(new Color(0, 0, 0));
+        this.txtUsername.setText(this.DEFAULT_USERNAME);
+        this.txtUsername.setBorder(null);
+        this.txtUsername.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                txtUsernameFocusGained(e);
+            }
+
+            public void focusLost(FocusEvent evt) {
+                txtUsernameFocusLost(evt);
             }
         });
 
-        this.jPasswordField.setBackground(new Color(255, 255, 255));
-        this.jPasswordField.setForeground(new Color(0, 0, 0));
-        this.jPasswordField.setText("Password");
-        this.jPasswordField.setBorder(null);
-        this.jPasswordField.addActionListener(this::jPasswordField1ActionPerformed);
+        this.txtPassword.setBackground(new Color(255, 255, 255));
+        this.txtPassword.setForeground(new Color(0, 0, 0));
+        this.txtPassword.setText(this.DEFAULT_PASSWORD);
+        this.txtPassword.setBorder(null);
+        this.txtPassword.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                txtPasswordFocusGained(e);
+            }
 
-        this.jButtonSingIn.setBackground(new Color(255, 255, 255));
-        this.jButtonSingIn.setForeground(new Color(0, 0, 0));
-        this.jButtonSingIn.setText("Sing In");
-        this.jButtonSingIn.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-        this.jButtonSingIn.addActionListener(this::jButton2ActionPerformed);
+            public void focusLost(FocusEvent evt) {
+                txtPasswordFocusLost(evt);
+            }
+        });
 
-        this.jButtonSingUp.setBackground(new Color(255, 255, 255));
-        this.jButtonSingUp.setForeground(new Color(0, 0, 0));
-        this.jButtonSingUp.setText("Sing Up");
-        this.jButtonSingUp.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-        this.jButtonSingUp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        this.jButtonSingUp.addActionListener(this::jButton1ActionPerformed);
+        this.btnLogin.setBackground(new Color(255, 255, 255));
+        this.btnLogin.setForeground(new Color(0, 0, 0));
+        this.btnLogin.setText("Sing In");
+        this.btnLogin.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+        this.btnLogin.addActionListener(this::btnLoginActionPerformed);
+
+        this.btnRegister.setBackground(new Color(255, 255, 255));
+        this.btnRegister.setForeground(new Color(0, 0, 0));
+        this.btnRegister.setText("Sing Up");
+        this.btnRegister.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+        this.btnRegister.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.btnRegister.addActionListener(this::btnRegisterActionPerformed);
 
         final GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
 
@@ -123,26 +139,26 @@ public class Login extends JFrame {
                         .addGap(78, 78, 78)
                         .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabelUserIcon)
+                                        .addComponent(lblUserIcon)
                                         .addGap(240, 240, 240))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabelPadlock)
+                                        .addComponent(lblPadlock)
                                         .addGap(0, 0, 0)
                                         .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(jLabel1)
                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(jButtonSingIn, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(18, 18, 18)
-                                                                .addComponent(jButtonSingUp, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addComponent(jLabel2)
                                                                         .addComponent(jLabel3))
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(jPasswordField)
-                                                                        .addComponent(jTextFieldUsername)
+                                                                        .addComponent(txtPassword)
+                                                                        .addComponent(txtUsername)
                                                                         .addComponent(jSeparator1)
                                                                         .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE))
                                                         )
@@ -161,46 +177,38 @@ public class Login extends JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jTextFieldUsername, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtUsername, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabelUserIcon)
+                                                .addComponent(lblUserIcon)
                                                 .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)))
                                 .addGap(14, 14, 14)
                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addComponent(jLabel3)
-                                                        .addComponent(jPasswordField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabelPadlock))
+                                        .addComponent(lblPadlock))
                                 .addGap(44, 44, 44)
                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButtonSingUp, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButtonSingIn, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
                                 .addGap(92, 92, 92))
         );
 
-        jButtonSingUp.getAccessibleContext().setAccessibleName("");
+        btnRegister.getAccessibleContext().setAccessibleName("");
 
         pack();
     }
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnLoginActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnRegisterActionPerformed(ActionEvent evt) {
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -226,17 +234,44 @@ public class Login extends JFrame {
         });
     }
 
-    private void jTextField2KeyTyped(KeyEvent event) {
-        int key = event.getKeyChar();
+    private void txtUsernameFocusGained(FocusEvent event) {
+        final String test = this.txtUsername.getText();
 
-        boolean uppercase = key >= 65 && key <= 90;
-        boolean lowercase = key >= 67 && key <= 122;
-        boolean space = key == 32;
-
-        if (!(uppercase || lowercase || space)) {
-            event.consume();
+        if (test.equals(this.DEFAULT_USERNAME)) {
+            this.txtUsername.setText("");
         }
     }
 
+    private void txtUsernameFocusLost(FocusEvent evt) {
+        final String test = this.txtUsername.getText();
+
+        if (Objects.equals("", test)) {
+            this.txtUsername.setText(this.DEFAULT_USERNAME);
+
+            this.btnLogin.setEnabled(false);
+        } else {
+            this.btnLogin.setEnabled(true);
+        }
+    }
+
+    private void txtPasswordFocusGained(FocusEvent event) {
+        final char[] password = this.txtPassword.getPassword();
+
+        if (Arrays.equals(password, this.DEFAULT_PASSWORD.toCharArray())) {
+            this.txtPassword.setText("");
+        }
+    }
+
+    private void txtPasswordFocusLost(FocusEvent evt) {
+        final char[] password = this.txtPassword.getPassword();
+
+        if (password.length == 0) {
+            this.txtPassword.setText(this.DEFAULT_PASSWORD);
+
+            this.btnLogin.setEnabled(false);
+        } else {
+            this.btnLogin.setEnabled(true);
+        }
+    }
 
 }
