@@ -2,30 +2,23 @@ plugins {
     java
 }
 
-group = "com.srvenient.universitywork"
-version = "0.0.0"
+subprojects {
+    apply(plugin = "java-library")
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-
-tasks {
-    test {
-        useJUnitPlatform()
-    }
-
-    java {
+    configure<JavaPluginExtension> {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    tasks {
+        compileJava {
+            options.compilerArgs.add("-parameters")
         }
     }
 }
